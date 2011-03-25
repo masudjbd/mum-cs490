@@ -13,7 +13,7 @@ public class RW {
     static Random random = new Random();
 
     public static void main(String[] arg)  {
-	for (int i=0; i<5; i++)  { 
+	for (int i=0; i<50; i++)  { 
 	    Reader reader = new Reader(i);
 	    new Thread(reader).start();  // create thread for each reader 
 	}

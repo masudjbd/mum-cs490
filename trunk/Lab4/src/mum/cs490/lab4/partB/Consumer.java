@@ -11,11 +11,15 @@ public class Consumer implements Runnable  {
 
     public void run()  {
 	while (true) {
-	    Main.fullSemaphore.down();
-	    Main.mutex.acquire();
+//	    Main.fullSemaphore.down();
+//	    Main.mutex.acquire();
+		Main.lock.lock();
+		Main.fullQ.await();
 		int item = remove_item();
-		Main.mutex.release();
-	    Main.emptySemaphore.up();
+//		Main.mutex.release();
+//	    Main.emptySemaphore.up();
+		Main.emptyQ.signal();
+		Main.lock.unlock();
 		consume_item(item);
 	}
 

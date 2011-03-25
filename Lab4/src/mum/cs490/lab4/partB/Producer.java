@@ -13,11 +13,15 @@ public class Producer implements Runnable  {
     public void run()  {
 	while (true) {
 	    int item = produce_item();
-	    Main.emptySemaphore.down();
-	    Main.mutex.acquire();
+//	    Main.emptySemaphore.down();
+//	    Main.mutex.acquire();
+	    Main.lock.lock();
+	    Main.emptyQ.await();
 	    insert_item(item);
-	    Main.mutex.release();
-	    Main.fullSemaphore.up();
+//	    Main.mutex.release();
+//	    Main.fullSemaphore.up();
+	    Main.fullQ.signal();
+	    Main.lock.unlock();
 	}
 
     }

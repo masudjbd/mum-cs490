@@ -10,6 +10,9 @@ public class SleepingBarber {
     public static int waiting = 0;	// number of customers waiting
     public static int bid = 0;	//  the next barber to start cutting hair
     public static int cid = 0;	// the next customer to have his hair cut
+    
+    private static Object bidSync = new Object();
+    private static Object cidSync = new Object();
 
     public static final Semaphore customers = new Semaphore(0);
     public static final Semaphore barbers = new Semaphore(0);
@@ -47,10 +50,16 @@ public class SleepingBarber {
 	    }
 	}
 	void cutHair() {
-	    SleepingBarber.bid = bid;  // communicate it to the customer
-	    System.out.println("b" + bid 
-			       + " is cutting c" + cid + "'s hair");
-	    pause(MILLISECS);
+	    synchronized (cidSync) {
+			synchronized (bidSync) {
+					synchronized (this) {
+						SleepingBarber.bid = bid; // communicate it to the customer
+						System.out.println("b" + bid + " is cutting c" + cid
+								+ "'s hair");
+					}
+			}
+		}
+		pause(MILLISECS);
 	}
     }
 
@@ -75,10 +84,16 @@ public class SleepingBarber {
 	    }
 	}
 	void getHaircut() {
-	    SleepingBarber.cid = cid;  // communicate it to the barber
-	    System.out.println("c" + cid 
-			       + "'s hair is being cut by b" + bid);
-	    pause(MILLISECS);
+	    synchronized (cidSync) {
+			synchronized (bidSync) {
+					synchronized (this) {
+						SleepingBarber.cid = cid; // communicate it to the barber
+						System.out.println("c" + cid
+								+ "'s hair is being cut by b" + bid);
+					}
+			}
+		}
+		pause(MILLISECS);
 	}
     }
 }

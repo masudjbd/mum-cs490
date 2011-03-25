@@ -1,4 +1,4 @@
-package mum.cs490.lab5;
+package mum.cs490.lab5.partA;
 
 public class CounterLock implements Runnable  {
     static int count = 0;

@@ -1,4 +1,4 @@
-package mum.cs490.lab5;
+package mum.cs490.lab5.partA;
 
 public class ThreadSafeInt {
 	private int value = 0;

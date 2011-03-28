@@ -8,6 +8,9 @@ class Philosopher implements Runnable {
 	static final int EATING = 2;
 
 	static int state[] = new int[N]; // array to keep track of states
+//	static Lock mutex = new Lock(); // for critical regions
+//	static Lock mutex2 = new Lock(); // for critical regions
+//	static ConditionQ f[] = new ConditionQ[N];// one cond. Q per fork
 	static int pnum = 0;
 	static Random random = new Random();
 	static int charCount = 0; // for pretty-printing
@@ -15,7 +18,7 @@ class Philosopher implements Runnable {
 	static Lock countLock = new Lock();
 	static Lock mutexLock = new Lock();
 	static Lock forkLock = new Lock();
-	static ConditionQ[] cQs = new ConditionQ[N];
+	static ConditionQ[] conditionQs = new ConditionQ[N];
 
 	static public void main(String[] arg) {
 		new Philosopher();
@@ -23,14 +26,14 @@ class Philosopher implements Runnable {
 
 	Philosopher() {
 		for (int i = 0; i < N; i++) {
-			cQs[i] = forkLock.newCondition(i + " ");
+			conditionQs[i] = forkLock.newCondition(i + " ");
 		}
 		for (int i = 0; i < N; i++) {
 			new Thread(this).start(); // create thread and start
 		}
 		for (int i = 0; i < N; i++) {
 			forkLock.lock();
-			cQs[i].signal();
+			conditionQs[i].signal();
 			forkLock.unlock();
 		}
 	}
@@ -55,8 +58,8 @@ class Philosopher implements Runnable {
 		if (i == 4)
 			odd = 0;
 		forkLock.lock();
-		cQs[even].await();
-		cQs[odd].await();
+		conditionQs[even].await();
+		conditionQs[odd].await();
 		forkLock.unlock();
 		mutexLock.lock();
 		state[i] = EATING; // record that philosopher is eating
@@ -70,8 +73,8 @@ class Philosopher implements Runnable {
 		state[i] = THINKING; // philosopher has finished eating
 		mutexLock.unlock();
 		forkLock.lock();
-		cQs[even].signal();
-		cQs[odd].signal();
+		conditionQs[even].signal();
+		conditionQs[odd].signal();
 		forkLock.unlock();
 	}
 

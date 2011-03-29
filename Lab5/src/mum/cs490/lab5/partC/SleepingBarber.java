@@ -51,13 +51,13 @@ public class SleepingBarber {
 	}
 	void cutHair() {
 	    synchronized (cidSync) {
-			synchronized (bidSync) {
-					synchronized (this) {
+//			synchronized (bidSync) {
+//					synchronized (this) {
 						SleepingBarber.bid = bid; // communicate it to the customer
 						System.out.println("b" + bid + " is cutting c" + cid
 								+ "'s hair");
-					}
-			}
+//					}
+//			}
 		}
 		pause(MILLISECS);
 	}
@@ -85,13 +85,13 @@ public class SleepingBarber {
 	}
 	void getHaircut() {
 	    synchronized (cidSync) {
-			synchronized (bidSync) {
-					synchronized (this) {
+//			synchronized (bidSync) {
+//					synchronized (this) {
 						SleepingBarber.cid = cid; // communicate it to the barber
 						System.out.println("c" + cid
 								+ "'s hair is being cut by b" + bid);
-					}
-			}
+//					}
+//			}
 		}
 		pause(MILLISECS);
 	}

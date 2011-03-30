@@ -68,7 +68,9 @@ class Philosopher implements Runnable {
 
 	void putForks(int i) { // i: which philosopher (0 to N-1)
 		int even = ((i % 2) == 0) ? i : i + 1;
-		int odd = ((i % 2) == 1) ? i : (i + 1) % 5;
+		int odd = ((i % 2) == 1) ? i : i + 1;
+		if (i == 4)
+			odd = 0;
 		mtx[i].down();
 		state[i] = THINKING; // philosopher has finished eating
 		mtx[i].up();

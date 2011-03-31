@@ -30,11 +30,11 @@ public class Main {
 	    t.start();
 	}
 
-	for (int i = 0; i < max; i++) {
-		lock.lock();
-		emptyQ.signal();
-		lock.unlock();
-	}
+		// for (int i = 0; i < max; i++) {
+		// lock.lock();
+		// emptyQ.signal();
+		// lock.unlock();
+		// }
 	
 	for (int i=0; i<consumers; i++)  {
 	    Consumer c = new Consumer(i);

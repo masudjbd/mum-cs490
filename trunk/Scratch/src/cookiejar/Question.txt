@@ -1,0 +1,5 @@
+The Cookie Jar Problem. A cookie jar that never becomes empty (the best type!) is being shared by two
+sisters, Tina and Judy, using the following (not-so-good) rule: Judy can get a cookie from the jar only after
+Tina (being the older sister) gets a cookie in at least two separate occasions, whereas Tina gets a cookie from
+the jar whenever she wants to. Treating Tina and Judy as two independently executing processes and the
+Cookie Jar as a shared resource, develop a concurrent algorithm to solve the Cookie Jar Problem.

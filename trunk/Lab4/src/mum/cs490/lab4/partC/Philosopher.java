@@ -23,7 +23,6 @@ class Philosopher implements Runnable {
 	Philosopher() {
 		for (int i = 0; i < N; i++) {
 			fork[i] = new Semaphore(1);
-			mtx = new Semaphore(1);
 		}
 		for (int i = 0; i < N; i++) {
 			new Thread(this).start(); // create thread and start
@@ -91,10 +90,9 @@ class Philosopher implements Runnable {
 	}
 
 	void checkForConflict(int i) {
-		int leftPhilosopher = left(i);
 		mtx.down();
-		if (state[leftPhilosopher] == EATING) {
-			System.out.println("Conflict between " + leftPhilosopher + " and "
+		if (state[left(i)] == EATING) {
+			System.out.println("Conflict between " + left(i) + " and "
 					+ i);
 		}
 		if (state[right(i)] == EATING) {
